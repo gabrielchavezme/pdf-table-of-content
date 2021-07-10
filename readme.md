@@ -1,5 +1,5 @@
 <a href="https://gabrielchavez.me" target="_blank">
-<img width="300" src="https://gabrielchavez.me/storage/2021/01/Logotipo-Gabriel-Cha%CC%81vez-10.png">
+<img width="300" src="https://gabrielchavez.me/storage/2021/01/Logotipo-Gabriel-Cha%CC%81vez-03-1024x240.png">
 </a>
 <span>&nbsp;&nbsp;&nbsp;</span>
 
