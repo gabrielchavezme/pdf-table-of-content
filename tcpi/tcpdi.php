@@ -684,6 +684,15 @@ class TCPDI extends FPDF_TPL {
         }
     }
 
+    public function Footer() {
+        // Position at 15 mm from bottom
+        $this->SetY(-15);
+        // Set font
+        $this->SetFont('helvetica', 'I', 8);
+        // Page number
+        $this->Cell(0, 10, 'Página '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
+    }
+
     /**
      * Modified so not each call will add a newline to the output.
      */
