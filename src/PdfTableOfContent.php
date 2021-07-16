@@ -74,7 +74,8 @@ class PdfTableOfContent
             $pageCount = $pdf->setSourceFile($file['file']);
             
             for ($i = 1; $i <= $pageCount; $i++) {
-                
+                $pdf->SetPrintHeader(false);
+                $pdf->SetPrintFooter(false);
                 $pageId = $pdf->ImportPage($i);
                 $size = $pdf->getTemplateSize($pageId);
                 $pdf->AddPage('P', $size);
