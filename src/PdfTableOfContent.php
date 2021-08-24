@@ -67,23 +67,23 @@ class PdfTableOfContent
         }
 
         $pdf = new TCPDI();
-        $page = 0;
+        $page = 1;
 
         foreach ($this->documents as $key => $file) {           
              
             $pageCount = $pdf->setSourceFile($file['file']);
+            $pdf->Bookmark($file['title'], 0, 0, $page, 'I', array(0,128,0));
+            $this->documents[$key]['page'] = $page;
             
             for ($i = 1; $i <= $pageCount; $i++) {
+                
                 $pdf->SetPrintHeader(false);
                 $pageId = $pdf->ImportPage($i);
                 $size = $pdf->getTemplateSize($pageId);
                 $pdf->AddPage('P', $size);
                 $pdf->useTemplate($pageId); 
                 $page++;
-            }
-            
-            $pdf->Bookmark($file['title'], 0, 0, $page, 'I', array(0,128,0));
-            $this->documents[$key]['page'] = $page;
+            }    
         }
 
         $pdf->Output($outputFilename, 'F');
