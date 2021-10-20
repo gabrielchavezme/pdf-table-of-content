@@ -37,8 +37,8 @@ class PdfTableOfContent
     public function contains(string $file): bool
     {
         $found = false;
-        foreach($this->documents as $key => $document) {
-            if($document['file'] == $file) {
+        foreach ($this->documents as $key => $document) {
+            if ($document['file'] == $file) {
                 $found = true;
             }
         }
@@ -58,7 +58,7 @@ class PdfTableOfContent
     /**
      * Generates a merged PDF file from the already stored pdf files
      * @param string $outputFilename the file to write to
-     * @return bool
+     * @return array return table of content
      */
     public function merge(string $outputFilename): array
     {
@@ -69,21 +69,25 @@ class PdfTableOfContent
         $pdf = new TCPDI();
         $page = 1;
 
-        foreach ($this->documents as $key => $file) {           
-             
-            $pageCount = $pdf->setSourceFile($file['file']);
-            $pdf->Bookmark($file['title'], 0, 0, $page, 'I', array(0,128,0));
+        foreach ($this->documents as $key => $document) {
+
+            if (!is_file($document['file'])) {
+                continue;
+            }
+
+            $pageCount = $pdf->setSourceFile($document['file']);
+            $pdf->Bookmark($document['title'], 0, 0, $page, 'I', array(0, 128, 0));
             $this->documents[$key]['page'] = $page;
-            
+
             for ($i = 1; $i <= $pageCount; $i++) {
-                
+
                 $pdf->SetPrintHeader(false);
                 $pageId = $pdf->ImportPage($i);
                 $size = $pdf->getTemplateSize($pageId);
                 $pdf->AddPage('P', $size);
-                $pdf->useTemplate($pageId); 
+                $pdf->useTemplate($pageId);
                 $page++;
-            }    
+            }
         }
 
         $pdf->Output($outputFilename, 'F');
