@@ -58,9 +58,10 @@ class PdfTableOfContent
     /**
      * Generates a merged PDF file from the already stored pdf files
      * @param string $outputFilename the file to write to
+     * @param bool $showFooter show pageNo and total no of pages
      * @return array return table of content
      */
-    public function merge(string $outputFilename): array
+    public function merge(string $outputFilename, bool $showFooter = true): array
     {
         if (count($this->documents) === 0) {
             throw new NoFilesDefinedException();
@@ -82,6 +83,7 @@ class PdfTableOfContent
             for ($i = 1; $i <= $pageCount; $i++) {
 
                 $pdf->SetPrintHeader(false);
+                $pdf->setPrintFooter($showFooter);
                 $pageId = $pdf->ImportPage($i);
                 $size = $pdf->getTemplateSize($pageId);
                 $pdf->AddPage('P', $size);
